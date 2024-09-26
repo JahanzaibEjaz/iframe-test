@@ -5,7 +5,7 @@
     <div class="d-flex">
       <input type="text" id="url" placeholder="Enter URL" />
       <input type="text" id="sesssionIdKey" placeholder="Enter sessionID" />
-      <button id="postYourAdd" onclick="light()">OPEN</button>
+      <button id="postYourAdd" onclick="openIframe()">OPEN</button>
     </div>
 
     <iframe
@@ -18,7 +18,7 @@
     </iframe>
 
     <script>
-      function light() {
+      function openIframe() {
         var iframe = $("#forPostyouradd");
         var value = document.getElementById("sesssionIdKey").value;
         var urlValue = document.getElementById("url").value;
