@@ -3,6 +3,7 @@
 
   <body>
     <button id="postYourAdd" onclick="light()">OPEN</button>
+    <input type="text" id="sesssionIdKey" />
     <iframe
       id="forPostyouradd"
       src=""
@@ -15,10 +16,12 @@
     <script>
       function light() {
         var iframe = $("#forPostyouradd");
+        var value = document.getElementById("sesssionIdKey").value;
         debugger;
+        // iframe.attr("src", "https://localhost:4200/authentication/login");
         iframe.attr(
           "src",
-          "https://qa-uaica-20.azakaw.com/authentication/login"
+          `https://qa-uaica-20.azakaw.com/onboarding?SessionId=${value}`
         );
       }
     </script>
