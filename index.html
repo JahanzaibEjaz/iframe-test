@@ -3,9 +3,26 @@
 
   <body>
     <div class="d-flex">
-      <input type="text" id="url" placeholder="Enter URL" />
-      <input type="text" id="sesssionIdKey" placeholder="Enter sessionID" />
-      <button id="postYourAdd" onclick="openIframe()">OPEN</button>
+      <input
+        type="text"
+        id="sessionUrl"
+        placeholder="https://"
+        value="https://qa-uaica-20-auth.azakaw.com/api"
+      />
+      <textarea
+        id="payloadJson"
+        name="textarea1"
+        placeholder="Start here..."
+      ></textarea>
+
+      <button id="postYourAdd" onclick="light()">OPEN</button>
+
+      <input
+        type="text"
+        id="iframeUrl"
+        placeholder="https://"
+        value="https://qa-uaica-20.azakaw.com"
+      />
     </div>
 
     <iframe
@@ -19,17 +36,48 @@
     </iframe>
 
     <script>
-      function openIframe() {
+      function light() {
         var iframe = $("#forPostyouradd");
-        var value = document.getElementById("sesssionIdKey").value;
-        var urlValue = document.getElementById("url").value;
-        if (!urlValue) {
-          urlValue = "qa-uaica-20.azakaw.com";
-        }
+        var iframeUrl_ = document.getElementById("iframeUrl").value;
+        var sessionUrl_ = document.getElementById("sessionUrl").value;
 
-        debugger;
-        // iframe.attr("src", "https://localhost:4200/authentication/login");
-        iframe.attr("src", `https://${urlValue}/onboarding?SessionId=${value}`);
+        // var urlValue = document.getElementById("url").value;
+        // if (!urlValue) {
+        //   urlValue = "https://qa-uaica-20.azakaw.com";
+        // }
+
+        var value = document.getElementById("payloadJson").value;
+        const url = `${sessionUrl_}/AppSessionManager/GetSessionId`;
+        let sessionID = "";
+
+        fetch(url, {
+          method: "POST",
+          body: value,
+          headers: {
+            "Content-type": "application/json; charset=UTF-8",
+          },
+        })
+          .then((res) => {
+            const result = res?.json();
+            result?.then((jsonResult) => {
+              console.log(jsonResult);
+              sessionID = jsonResult?.result?.sessionId;
+
+              iframe.attr(
+                "src",
+                `${iframeUrl_}/onboarding?SessionId=${sessionID}`
+              );
+            });
+          })
+          // .then((data) => {
+          //   console.log("res", data);
+          //   sessionID = data?.result;
+          // })
+          .catch((err) => {
+            console.error(err);
+          });
+         debugger;
+
       }
     </script>
   </body>
